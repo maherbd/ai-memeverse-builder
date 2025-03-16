@@ -1,6 +1,5 @@
-
 import { Link } from 'react-router-dom';
-import { Twitter, Telegram, Github } from 'lucide-react';
+import { Twitter, MessageCircle, Github } from 'lucide-react';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -21,7 +20,7 @@ const Footer = () => {
                 <Twitter size={20} />
               </a>
               <a href="https://telegram.org" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-primary transition-colors">
-                <Telegram size={20} />
+                <MessageCircle size={20} />
               </a>
               <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-primary transition-colors">
                 <Github size={20} />

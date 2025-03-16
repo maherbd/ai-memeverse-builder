@@ -1,3 +1,4 @@
+
 import { Link } from 'react-router-dom';
 import { Twitter, MessageCircle, Github } from 'lucide-react';
 
@@ -47,8 +48,8 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/" className="text-white/60 hover:text-white transition-colors text-sm">
-                  Roadmap
+                <Link to="/documentation" className="text-white/60 hover:text-white transition-colors text-sm">
+                  Documentation
                 </Link>
               </li>
             </ul>
@@ -58,23 +59,23 @@ const Footer = () => {
             <h4 className="font-medium mb-4">Resources</h4>
             <ul className="space-y-3">
               <li>
-                <Link to="/" className="text-white/60 hover:text-white transition-colors text-sm">
+                <Link to="/documentation" className="text-white/60 hover:text-white transition-colors text-sm">
                   Documentation
                 </Link>
               </li>
               <li>
-                <Link to="/" className="text-white/60 hover:text-white transition-colors text-sm">
-                  Tutorials
+                <Link to="/support" className="text-white/60 hover:text-white transition-colors text-sm">
+                  Support
                 </Link>
               </li>
               <li>
-                <Link to="/" className="text-white/60 hover:text-white transition-colors text-sm">
+                <Link to="/blog" className="text-white/60 hover:text-white transition-colors text-sm">
                   Blog
                 </Link>
               </li>
               <li>
-                <Link to="/" className="text-white/60 hover:text-white transition-colors text-sm">
-                  Support
+                <Link to="/support" className="text-white/60 hover:text-white transition-colors text-sm">
+                  Help Center
                 </Link>
               </li>
             </ul>
@@ -84,17 +85,17 @@ const Footer = () => {
             <h4 className="font-medium mb-4">Legal</h4>
             <ul className="space-y-3">
               <li>
-                <Link to="/" className="text-white/60 hover:text-white transition-colors text-sm">
+                <Link to="/privacy-policy" className="text-white/60 hover:text-white transition-colors text-sm">
                   Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link to="/" className="text-white/60 hover:text-white transition-colors text-sm">
+                <Link to="/terms-of-service" className="text-white/60 hover:text-white transition-colors text-sm">
                   Terms of Service
                 </Link>
               </li>
               <li>
-                <Link to="/" className="text-white/60 hover:text-white transition-colors text-sm">
+                <Link to="/cookie-policy" className="text-white/60 hover:text-white transition-colors text-sm">
                   Cookie Policy
                 </Link>
               </li>
@@ -107,10 +108,10 @@ const Footer = () => {
             © {currentYear} Reham. All rights reserved.
           </p>
           <div className="flex space-x-6">
-            <Link to="/" className="text-white/60 hover:text-white transition-colors text-sm">
+            <Link to="/privacy-policy" className="text-white/60 hover:text-white transition-colors text-sm">
               Privacy Policy
             </Link>
-            <Link to="/" className="text-white/60 hover:text-white transition-colors text-sm">
+            <Link to="/terms-of-service" className="text-white/60 hover:text-white transition-colors text-sm">
               Terms of Service
             </Link>
           </div>

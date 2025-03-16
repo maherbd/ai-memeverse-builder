@@ -378,7 +378,7 @@ const ProjectAnalytics = () => {
                               borderColor: '#4B5563',
                               color: '#F9FAFB' 
                             }}
-                            formatter={(value) => {
+                            formatter={(value: number) => {
                               const minutes = Math.floor(value / 60);
                               const seconds = value % 60;
                               return [`${minutes}m ${seconds}s`, 'Duration']

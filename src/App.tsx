@@ -14,6 +14,7 @@ import ProjectEditor from "./pages/ProjectEditor";
 import CreateProject from "./pages/CreateProject";
 import ProjectAnalytics from "./pages/ProjectAnalytics";
 import Blog from "./pages/Blog";
+import BlogPost from "./pages/BlogPost";
 import Documentation from "./pages/Documentation";
 import Support from "./pages/Support";
 
@@ -35,6 +36,7 @@ const App = () => (
           <Route path="/dashboard/edit/:id" element={<ProjectEditor />} />
           <Route path="/dashboard/analytics/:id" element={<ProjectAnalytics />} />
           <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:id" element={<BlogPost />} />
           <Route path="/documentation" element={<Documentation />} />
           <Route path="/support" element={<Support />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

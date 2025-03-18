@@ -66,6 +66,7 @@ const Support = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredFAQs, setFilteredFAQs] = useState(FAQs);
   const [contactSubmitted, setContactSubmitted] = useState(false);
+  const [activeTab, setActiveTab] = useState('faqs');
   
   // Initialize scroll animations
   useScrollAnimation();
@@ -102,6 +103,10 @@ const Support = () => {
       });
     }, 1000);
   };
+
+  const switchToContactTab = () => {
+    setActiveTab('contact');
+  };
   
   return (
     <div className="min-h-screen flex flex-col">
@@ -129,7 +134,7 @@ const Support = () => {
           </div>
           
           <div className="animate-fade-in animate-delay-200">
-            <Tabs defaultValue="faqs" className="w-full">
+            <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
               <div className="flex justify-center mb-6">
                 <TabsList className="glass-morphism bg-background/50 border border-white/10">
                   <TabsTrigger value="faqs" className="data-[state=active]:bg-white/10">
@@ -180,7 +185,7 @@ const Support = () => {
                       Can't find what you're looking for? Reach out to our support team.
                     </p>
                     <Button 
-                      onClick={() => document.querySelector('[data-state="inactive"][data-value="contact"]')?.click()} 
+                      onClick={switchToContactTab} 
                       variant="outline"
                       className="glass-morphism border-white/10 hover:bg-white/5"
                     >

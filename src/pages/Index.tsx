@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import Features from '@/components/Features';
+import FeaturedTemplates from '@/components/FeaturedTemplates';
 import Footer from '@/components/Footer';
 import { useScrollAnimation } from '@/utils/animation';
 import { Button } from '@/components/ui/button';
@@ -23,6 +24,7 @@ const Index = () => {
       <main className="flex-grow overflow-hidden">
         <Hero />
         <Features />
+        <FeaturedTemplates />
         
         {/* Steps Section */}
         <section className="py-24 relative">

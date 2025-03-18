@@ -1,338 +1,156 @@
 
-import { useEffect } from 'react';
+import { useState } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { useScrollAnimation } from '@/utils/animation';
-import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { FileText, Code, Puzzle, Globe, Shield, Database } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Search, FileText, Code, Key } from 'lucide-react';
+import ApiKeysChecklist from '@/components/ApiKeysChecklist';
 
-const Documentation = () => {
+const DocumentationPage = () => {
+  const [searchQuery, setSearchQuery] = useState('');
+  
   // Initialize scroll animations
   useScrollAnimation();
-  
-  // Scroll to top on component mount
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
   
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
       <main className="flex-grow pt-28 pb-16">
         <div className="container mx-auto px-4">
-          <div className="text-center max-w-3xl mx-auto mb-12 animate-fade-in">
+          <div className="text-center mb-10 animate-fade-in">
             <h1 className="text-3xl md:text-4xl font-bold mb-4 text-gradient">Documentation</h1>
-            <p className="text-white/70 text-lg">
-              Learn how to use Reham to create stunning Web3 websites
+            <p className="text-white/70 text-lg max-w-2xl mx-auto">
+              Everything you need to know about building, customizing, and deploying your Web3 website.
             </p>
+            
+            <div className="relative max-w-md mx-auto mt-8">
+              <Input 
+                type="text"
+                placeholder="Search documentation..."
+                className="glass-morphism bg-white/5 border-white/10 pl-10"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-white/50 h-4 w-4" />
+              <Button 
+                className="absolute right-1 top-1/2 -translate-y-1/2 h-7 px-3"
+                size="sm"
+              >
+                Search
+              </Button>
+            </div>
           </div>
           
-          <div className="animate-fade-in animate-delay-100">
-            <Tabs defaultValue="getting-started" className="w-full">
-              <div className="mb-6 overflow-x-auto">
-                <TabsList className="glass-morphism bg-background/50 border border-white/10">
-                  <TabsTrigger value="getting-started" className="data-[state=active]:bg-white/10">
-                    <FileText size={16} className="mr-1" />
-                    Getting Started
-                  </TabsTrigger>
-                  <TabsTrigger value="templates" className="data-[state=active]:bg-white/10">
-                    <Puzzle size={16} className="mr-1" />
-                    Templates
-                  </TabsTrigger>
-                  <TabsTrigger value="custom-domains" className="data-[state=active]:bg-white/10">
-                    <Globe size={16} className="mr-1" />
-                    Custom Domains
-                  </TabsTrigger>
-                  <TabsTrigger value="web3" className="data-[state=active]:bg-white/10">
-                    <Database size={16} className="mr-1" />
-                    Web3 Integration
-                  </TabsTrigger>
-                  <TabsTrigger value="api" className="data-[state=active]:bg-white/10">
-                    <Code size={16} className="mr-1" />
-                    API Reference
-                  </TabsTrigger>
-                  <TabsTrigger value="security" className="data-[state=active]:bg-white/10">
-                    <Shield size={16} className="mr-1" />
-                    Security
-                  </TabsTrigger>
-                </TabsList>
+          <Tabs defaultValue="guides" className="w-full max-w-4xl mx-auto animate-fade-in animate-delay-100">
+            <TabsList className="grid grid-cols-3 mb-8 glass-morphism bg-white/5 border border-white/10 p-1 w-full max-w-md mx-auto">
+              <TabsTrigger value="guides" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+                <FileText className="h-4 w-4 mr-2" />
+                Guides
+              </TabsTrigger>
+              <TabsTrigger value="api" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+                <Code className="h-4 w-4 mr-2" />
+                API
+              </TabsTrigger>
+              <TabsTrigger value="apikeys" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+                <Key className="h-4 w-4 mr-2" />
+                API Keys
+              </TabsTrigger>
+            </TabsList>
+            
+            <TabsContent value="guides" className="mt-0">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="glass-morphism bg-white/5 border border-white/10 rounded-lg p-6 hover:bg-white/10 transition">
+                  <h3 className="text-xl font-semibold mb-3">Getting Started</h3>
+                  <p className="text-white/70 mb-4">Learn the basics of setting up your Web3 website with our platform.</p>
+                  <ul className="space-y-3 text-white/60">
+                    <li className="hover:text-primary">• Introduction to Reham</li>
+                    <li className="hover:text-primary">• Choosing the right template</li>
+                    <li className="hover:text-primary">• Setting up your workspace</li>
+                    <li className="hover:text-primary">• Customizing your project</li>
+                  </ul>
+                </div>
+                
+                <div className="glass-morphism bg-white/5 border border-white/10 rounded-lg p-6 hover:bg-white/10 transition">
+                  <h3 className="text-xl font-semibold mb-3">Wallet Integration</h3>
+                  <p className="text-white/70 mb-4">Connect different wallet providers to your website.</p>
+                  <ul className="space-y-3 text-white/60">
+                    <li className="hover:text-primary">• Setting up Solana wallet</li>
+                    <li className="hover:text-primary">• Web3 authentication</li>
+                    <li className="hover:text-primary">• Managing wallet states</li>
+                    <li className="hover:text-primary">• Handling transactions</li>
+                  </ul>
+                </div>
+                
+                <div className="glass-morphism bg-white/5 border border-white/10 rounded-lg p-6 hover:bg-white/10 transition">
+                  <h3 className="text-xl font-semibold mb-3">Smart Contract Integration</h3>
+                  <p className="text-white/70 mb-4">Interact with blockchain contracts from your website.</p>
+                  <ul className="space-y-3 text-white/60">
+                    <li className="hover:text-primary">• Connecting to contracts</li>
+                    <li className="hover:text-primary">• Reading contract data</li>
+                    <li className="hover:text-primary">• Writing transactions</li>
+                    <li className="hover:text-primary">• Handling events</li>
+                  </ul>
+                </div>
+                
+                <div className="glass-morphism bg-white/5 border border-white/10 rounded-lg p-6 hover:bg-white/10 transition">
+                  <h3 className="text-xl font-semibold mb-3">Deployment</h3>
+                  <p className="text-white/70 mb-4">Launch your website to production environments.</p>
+                  <ul className="space-y-3 text-white/60">
+                    <li className="hover:text-primary">• Publishing your website</li>
+                    <li className="hover:text-primary">• Setting up custom domains</li>
+                    <li className="hover:text-primary">• IPFS deployment</li>
+                    <li className="hover:text-primary">• Continuous integration</li>
+                  </ul>
+                </div>
               </div>
-              
-              <TabsContent value="getting-started" className="mt-6">
-                <Card className="glass-morphism border-white/10 bg-white/5">
-                  <CardContent className="p-6">
-                    <h2 className="text-2xl font-bold mb-4">Getting Started with Reham</h2>
-                    
-                    <div className="space-y-6">
-                      <div>
-                        <h3 className="text-xl font-semibold mb-2">1. Create an Account</h3>
-                        <p className="text-white/70">
-                          Sign up for a Reham account using your email or by connecting your wallet.
-                          Once registered, you'll have access to all our website building features.
-                        </p>
-                      </div>
-                      
-                      <div>
-                        <h3 className="text-xl font-semibold mb-2">2. Choose a Template</h3>
-                        <p className="text-white/70">
-                          Browse our collection of Web3 website templates and select one that matches your project's needs.
-                          We offer templates for meme coins, DeFi protocols, NFT projects, and more.
-                        </p>
-                      </div>
-                      
-                      <div>
-                        <h3 className="text-xl font-semibold mb-2">3. Customize Your Website</h3>
-                        <p className="text-white/70">
-                          Use our intuitive editor to customize your website's content, colors, fonts, and layout.
-                          No coding knowledge required! Everything is visual and easy to use.
-                        </p>
-                      </div>
-                      
-                      <div>
-                        <h3 className="text-xl font-semibold mb-2">4. Connect Your Web3 Project</h3>
-                        <p className="text-white/70">
-                          Integrate your token contract, connect to blockchain data, and add Web3 features like wallet connection.
-                          Our platform supports Ethereum, Solana, and other major blockchains.
-                        </p>
-                      </div>
-                      
-                      <div>
-                        <h3 className="text-xl font-semibold mb-2">5. Publish Your Website</h3>
-                        <p className="text-white/70">
-                          Once you're happy with your website, publish it with a single click.
-                          Your site will be live instantly on our fast, reliable hosting infrastructure.
-                        </p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </TabsContent>
-              
-              <TabsContent value="templates" className="mt-6">
-                <Card className="glass-morphism border-white/10 bg-white/5">
-                  <CardContent className="p-6">
-                    <h2 className="text-2xl font-bold mb-4">Working with Templates</h2>
-                    
-                    <div className="space-y-6">
-                      <p className="text-white/70">
-                        Reham offers a variety of professionally designed templates optimized for Web3 projects.
-                        Each template is fully customizable and can be adapted to your specific needs.
-                      </p>
-                      
-                      <div>
-                        <h3 className="text-xl font-semibold mb-2">Template Categories</h3>
-                        <ul className="list-disc pl-6 space-y-2 text-white/70">
-                          <li><strong>Meme Coin Templates:</strong> Vibrant designs for community-driven token projects</li>
-                          <li><strong>DeFi Templates:</strong> Professional layouts for decentralized finance applications</li>
-                          <li><strong>NFT Templates:</strong> Gallery-focused designs for NFT collections and marketplaces</li>
-                          <li><strong>DAO Templates:</strong> Governance-oriented sites for decentralized organizations</li>
-                          <li><strong>Launchpad Templates:</strong> Pre-sale and IDO templates for token launches</li>
-                        </ul>
-                      </div>
-                      
-                      <div>
-                        <h3 className="text-xl font-semibold mb-2">Customization Options</h3>
-                        <p className="text-white/70">
-                          All templates can be extensively customized:
-                        </p>
-                        <ul className="list-disc pl-6 space-y-2 text-white/70">
-                          <li>Change colors, fonts, and overall design theme</li>
-                          <li>Add, remove, or rearrange sections</li>
-                          <li>Customize content, images, and graphics</li>
-                          <li>Integrate Web3 functionality specific to your project</li>
-                          <li>Modify layout and structure to match your brand</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </TabsContent>
-              
-              <TabsContent value="custom-domains" className="mt-6">
-                <Card className="glass-morphism border-white/10 bg-white/5">
-                  <CardContent className="p-6">
-                    <h2 className="text-2xl font-bold mb-4">Custom Domains</h2>
-                    
-                    <div className="space-y-6">
-                      <p className="text-white/70">
-                        Connect your own domain name to your Reham website for a professional online presence.
-                      </p>
-                      
-                      <div>
-                        <h3 className="text-xl font-semibold mb-2">Setting Up Your Domain</h3>
-                        <ol className="list-decimal pl-6 space-y-4 text-white/70">
-                          <li>
-                            <strong>Purchase a Domain:</strong> If you don't already have a domain name,
-                            purchase one from a domain registrar like Namecheap, GoDaddy, or Google Domains.
-                          </li>
-                          <li>
-                            <strong>Add Domain in Reham:</strong> Go to your project settings,
-                            navigate to the "Custom Domain" section, and enter your domain name.
-                          </li>
-                          <li>
-                            <strong>Configure DNS Settings:</strong> Follow our instructions to update your
-                            DNS records at your domain registrar. This typically involves adding CNAME or A records.
-                          </li>
-                          <li>
-                            <strong>Verify Domain:</strong> Once DNS changes propagate (which can take up to 48 hours),
-                            Reham will verify your domain and activate it for your website.
-                          </li>
-                        </ol>
-                      </div>
-                      
-                      <div>
-                        <h3 className="text-xl font-semibold mb-2">SSL Certificates</h3>
-                        <p className="text-white/70">
-                          All Reham websites, including those with custom domains, are automatically
-                          equipped with SSL certificates for secure HTTPS connections. No additional
-                          setup is required for SSL.
-                        </p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </TabsContent>
-              
-              <TabsContent value="web3" className="mt-6">
-                <Card className="glass-morphism border-white/10 bg-white/5">
-                  <CardContent className="p-6">
-                    <h2 className="text-2xl font-bold mb-4">Web3 Integration</h2>
-                    
-                    <div className="space-y-6">
-                      <p className="text-white/70">
-                        Reham makes it easy to integrate blockchain functionality into your website.
-                      </p>
-                      
-                      <div>
-                        <h3 className="text-xl font-semibold mb-2">Supported Blockchains</h3>
-                        <ul className="list-disc pl-6 space-y-2 text-white/70">
-                          <li><strong>Ethereum:</strong> Full support for ERC-20 tokens and Ethereum mainnet</li>
-                          <li><strong>Solana:</strong> Native integration with Solana blockchain and SPL tokens</li>
-                          <li><strong>Binance Smart Chain:</strong> Support for BEP-20 tokens and BSC dApps</li>
-                          <li><strong>Polygon:</strong> Integration with Polygon network for scalable dApps</li>
-                          <li><strong>And more:</strong> Expanding support for additional blockchains</li>
-                        </ul>
-                      </div>
-                      
-                      <div>
-                        <h3 className="text-xl font-semibold mb-2">Web3 Features</h3>
-                        <ul className="list-disc pl-6 space-y-2 text-white/70">
-                          <li><strong>Wallet Connection:</strong> Allow users to connect their Web3 wallets</li>
-                          <li><strong>Token Data:</strong> Display token price, market cap, and supply information</li>
-                          <li><strong>Price Charts:</strong> Embed real-time price charts from DexTools or DexScreener</li>
-                          <li><strong>Smart Contract Integration:</strong> Connect to your project's smart contracts</li>
-                          <li><strong>"Buy Now" Buttons:</strong> Direct links to DEXes where your token trades</li>
-                          <li><strong>NFT Galleries:</strong> Display NFT collections with metadata</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </TabsContent>
-              
-              <TabsContent value="api" className="mt-6">
-                <Card className="glass-morphism border-white/10 bg-white/5">
-                  <CardContent className="p-6">
-                    <h2 className="text-2xl font-bold mb-4">API Reference</h2>
-                    
-                    <div className="space-y-6">
-                      <p className="text-white/70">
-                        Reham provides APIs for developers who want to extend functionality or integrate with other services.
-                      </p>
-                      
-                      <div>
-                        <h3 className="text-xl font-semibold mb-2">REST API</h3>
-                        <p className="text-white/70">
-                          Our REST API allows you to programmatically manage your Reham websites and access blockchain data.
-                        </p>
-                        <div className="mt-4 p-4 bg-black/30 rounded-md font-mono text-sm overflow-x-auto">
-                          <pre>
-                            {`// Example API request to fetch token data
-fetch('https://api.reham.org/v1/token/0x1234...', {
-  headers: {
-    'Authorization': 'Bearer YOUR_API_KEY'
-  }
-})
-.then(response => response.json())
-.then(data => console.log(data));`}
-                          </pre>
-                        </div>
-                      </div>
-                      
-                      <div>
-                        <h3 className="text-xl font-semibold mb-2">Webhook Integration</h3>
-                        <p className="text-white/70">
-                          Set up webhooks to receive notifications about website events and blockchain activity.
-                        </p>
-                      </div>
-                      
-                      <div>
-                        <h3 className="text-xl font-semibold mb-2">JavaScript SDK</h3>
-                        <p className="text-white/70">
-                          Our JavaScript SDK provides easy-to-use functions for integrating Reham with your custom code.
-                        </p>
-                        <div className="mt-4 p-4 bg-black/30 rounded-md font-mono text-sm overflow-x-auto">
-                          <pre>
-                            {`// Example SDK usage
-import { Reham } from '@reham/sdk';
-
-const reham = new Reham('YOUR_API_KEY');
-const tokenData = await reham.getTokenData('0x1234...');`}
-                          </pre>
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </TabsContent>
-              
-              <TabsContent value="security" className="mt-6">
-                <Card className="glass-morphism border-white/10 bg-white/5">
-                  <CardContent className="p-6">
-                    <h2 className="text-2xl font-bold mb-4">Security</h2>
-                    
-                    <div className="space-y-6">
-                      <p className="text-white/70">
-                        At Reham, we take security seriously and implement multiple measures to protect your website and data.
-                      </p>
-                      
-                      <div>
-                        <h3 className="text-xl font-semibold mb-2">Infrastructure Security</h3>
-                        <ul className="list-disc pl-6 space-y-2 text-white/70">
-                          <li><strong>DDoS Protection:</strong> Enterprise-grade protection against distributed denial-of-service attacks</li>
-                          <li><strong>WAF (Web Application Firewall):</strong> Advanced filtering to block malicious traffic</li>
-                          <li><strong>Regular Security Audits:</strong> Our infrastructure undergoes regular security assessments</li>
-                          <li><strong>Data Encryption:</strong> All data is encrypted both in transit and at rest</li>
-                        </ul>
-                      </div>
-                      
-                      <div>
-                        <h3 className="text-xl font-semibold mb-2">Smart Contract Security</h3>
-                        <p className="text-white/70">
-                          When integrating with blockchain contracts:
-                        </p>
-                        <ul className="list-disc pl-6 space-y-2 text-white/70">
-                          <li>We use read-only methods by default to prevent unauthorized transactions</li>
-                          <li>All transaction requests require explicit user approval via their wallet</li>
-                          <li>We validate contract interactions on the client side before execution</li>
-                        </ul>
-                      </div>
-                      
-                      <div>
-                        <h3 className="text-xl font-semibold mb-2">Account Security</h3>
-                        <ul className="list-disc pl-6 space-y-2 text-white/70">
-                          <li><strong>2FA (Two-Factor Authentication):</strong> Available for all accounts</li>
-                          <li><strong>Wallet Authentication:</strong> Secure sign-in with Web3 wallets</li>
-                          <li><strong>Session Management:</strong> Automatic session timeouts and device tracking</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </TabsContent>
-            </Tabs>
-          </div>
+            </TabsContent>
+            
+            <TabsContent value="api" className="mt-0">
+              <div className="glass-morphism bg-white/5 border border-white/10 rounded-lg p-6">
+                <h3 className="text-xl font-semibold mb-3">API Reference</h3>
+                <p className="text-white/70 mb-6">Comprehensive documentation for our platform APIs and integrations.</p>
+                
+                <div className="space-y-6">
+                  <div>
+                    <h4 className="text-lg font-medium mb-2">Reham Web3 API</h4>
+                    <p className="text-white/60 mb-3">Core APIs for website generation and management</p>
+                    <ul className="space-y-2 text-white/60 pl-4">
+                      <li className="hover:text-primary">• Project Management</li>
+                      <li className="hover:text-primary">• Template API</li>
+                      <li className="hover:text-primary">• Analytics Endpoints</li>
+                    </ul>
+                  </div>
+                  
+                  <div>
+                    <h4 className="text-lg font-medium mb-2">Blockchain Connectors</h4>
+                    <p className="text-white/60 mb-3">APIs for interacting with various blockchains</p>
+                    <ul className="space-y-2 text-white/60 pl-4">
+                      <li className="hover:text-primary">• Solana RPC API</li>
+                      <li className="hover:text-primary">• Web3.js Integration</li>
+                      <li className="hover:text-primary">• Transaction API</li>
+                    </ul>
+                  </div>
+                  
+                  <div>
+                    <h4 className="text-lg font-medium mb-2">Extensions</h4>
+                    <p className="text-white/60 mb-3">APIs for platform extensions and plugins</p>
+                    <ul className="space-y-2 text-white/60 pl-4">
+                      <li className="hover:text-primary">• Analytics Extension</li>
+                      <li className="hover:text-primary">• Social Integration API</li>
+                      <li className="hover:text-primary">• Marketplace Extension</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </TabsContent>
+            
+            <TabsContent value="apikeys" className="mt-0">
+              <ApiKeysChecklist />
+            </TabsContent>
+          </Tabs>
         </div>
       </main>
       <Footer />
@@ -340,4 +158,4 @@ const tokenData = await reham.getTokenData('0x1234...');`}
   );
 };
 
-export default Documentation;
+export default DocumentationPage;

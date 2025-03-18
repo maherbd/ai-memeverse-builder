@@ -28,11 +28,18 @@ const BlogPostAuthor = ({
     .map(name => name[0])
     .join('')
     .toUpperCase();
+  
+  // Safe URL opener function
+  const openUrl = (url: string) => {
+    // Ensure URL has a protocol
+    const safeUrl = url.startsWith('http') ? url : `https://${url}`;
+    window.open(safeUrl, '_blank', 'noopener,noreferrer');
+  };
     
   return (
     <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 glass-morphism border border-white/10 rounded-xl p-6">
       <Avatar className="w-20 h-20">
-        <AvatarImage src={image || `https://ui-avatars.com/api/?name=${author}&background=random`} />
+        <AvatarImage src={image || `https://ui-avatars.com/api/?name=${author}&background=random`} alt={author} />
         <AvatarFallback>{initials}</AvatarFallback>
       </Avatar>
       
@@ -51,7 +58,7 @@ const BlogPostAuthor = ({
               variant="outline" 
               size="sm" 
               className="glass-morphism bg-white/5 border-white/10"
-              onClick={() => window.open(twitterUrl, '_blank')}
+              onClick={() => openUrl(twitterUrl)}
             >
               <Twitter size={16} className="mr-1" />
               Twitter
@@ -63,7 +70,7 @@ const BlogPostAuthor = ({
               variant="outline" 
               size="sm" 
               className="glass-morphism bg-white/5 border-white/10"
-              onClick={() => window.open(linkedinUrl, '_blank')}
+              onClick={() => openUrl(linkedinUrl)}
             >
               <Linkedin size={16} className="mr-1" />
               LinkedIn
@@ -75,7 +82,7 @@ const BlogPostAuthor = ({
               variant="outline" 
               size="sm" 
               className="glass-morphism bg-white/5 border-white/10"
-              onClick={() => window.open(websiteUrl, '_blank')}
+              onClick={() => openUrl(websiteUrl)}
             >
               <Globe size={16} className="mr-1" />
               Website

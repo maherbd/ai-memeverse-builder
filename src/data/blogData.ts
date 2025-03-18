@@ -35,7 +35,7 @@ export const blogPosts: BlogPost[] = [
   {
     id: '3',
     title: 'Integrating DEX Price Charts Into Your Crypto Website',
-    excerpt: 'A step-by-step guide to embedding real-time price charts from popular DEXes to boost your website's utility.',
+    excerpt: 'A step-by-step guide to embedding real-time price charts from popular DEXes to boost your website\'s utility.',
     image: 'https://images.unsplash.com/photo-1642104704074-907c0698cbd9?q=80&w=2940&auto=format&fit=crop',
     author: 'Michael Rodriguez',
     date: 'May 5, 2025',

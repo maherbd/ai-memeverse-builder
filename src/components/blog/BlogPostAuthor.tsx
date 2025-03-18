@@ -8,9 +8,20 @@ type BlogPostAuthorProps = {
   date: string;
   readTime: string;
   image?: string;
+  twitterUrl?: string;
+  linkedinUrl?: string;
+  websiteUrl?: string;
 };
 
-const BlogPostAuthor = ({ author, date, readTime, image }: BlogPostAuthorProps) => {
+const BlogPostAuthor = ({ 
+  author, 
+  date, 
+  readTime, 
+  image,
+  twitterUrl,
+  linkedinUrl,
+  websiteUrl
+}: BlogPostAuthorProps) => {
   // Extract initials for avatar fallback
   const initials = author
     .split(' ')
@@ -35,18 +46,41 @@ const BlogPostAuthor = ({ author, date, readTime, image }: BlogPostAuthorProps) 
         </p>
         
         <div className="flex flex-wrap gap-2 justify-center sm:justify-start">
-          <Button variant="outline" size="sm" className="glass-morphism bg-white/5 border-white/10">
-            <Twitter size={16} className="mr-1" />
-            Twitter
-          </Button>
-          <Button variant="outline" size="sm" className="glass-morphism bg-white/5 border-white/10">
-            <Linkedin size={16} className="mr-1" />
-            LinkedIn
-          </Button>
-          <Button variant="outline" size="sm" className="glass-morphism bg-white/5 border-white/10">
-            <Globe size={16} className="mr-1" />
-            Website
-          </Button>
+          {twitterUrl && (
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="glass-morphism bg-white/5 border-white/10"
+              onClick={() => window.open(twitterUrl, '_blank')}
+            >
+              <Twitter size={16} className="mr-1" />
+              Twitter
+            </Button>
+          )}
+          
+          {linkedinUrl && (
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="glass-morphism bg-white/5 border-white/10"
+              onClick={() => window.open(linkedinUrl, '_blank')}
+            >
+              <Linkedin size={16} className="mr-1" />
+              LinkedIn
+            </Button>
+          )}
+          
+          {websiteUrl && (
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="glass-morphism bg-white/5 border-white/10"
+              onClick={() => window.open(websiteUrl, '_blank')}
+            >
+              <Globe size={16} className="mr-1" />
+              Website
+            </Button>
+          )}
         </div>
       </div>
     </div>

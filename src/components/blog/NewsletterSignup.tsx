@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { ArrowRight, Check } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const NewsletterSignup = () => {
   const [email, setEmail] = useState('');
@@ -16,6 +17,15 @@ const NewsletterSignup = () => {
       toast({
         title: "Error",
         description: "Please enter your email address.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    if (!email.includes('@') || !email.includes('.')) {
+      toast({
+        title: "Error",
+        description: "Please enter a valid email address.",
         variant: "destructive"
       });
       return;
@@ -63,13 +73,20 @@ const NewsletterSignup = () => {
               className="w-full glass-morphism bg-white/5 border border-white/10 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all"
               disabled={isSubmitting || isSubscribed}
             />
-            {isSubscribed && (
-              <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-                <div className="bg-green-500/20 text-green-500 rounded-full p-1">
-                  <Check size={14} />
-                </div>
-              </div>
-            )}
+            <AnimatePresence>
+              {isSubscribed && (
+                <motion.div 
+                  initial={{ scale: 0, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0, opacity: 0 }}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2"
+                >
+                  <div className="bg-green-500/20 text-green-500 rounded-full p-1">
+                    <Check size={14} />
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
           <button 
             type="submit"

@@ -6,8 +6,7 @@ import { useScrollAnimation } from '@/utils/animation';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Search, FileText, Code, Key } from 'lucide-react';
-import ApiKeysChecklist from '@/components/ApiKeysChecklist';
+import { Search, FileText, Code } from 'lucide-react';
 
 const DocumentationPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -45,7 +44,7 @@ const DocumentationPage = () => {
           </div>
           
           <Tabs defaultValue="guides" className="w-full max-w-4xl mx-auto animate-fade-in animate-delay-100">
-            <TabsList className="grid grid-cols-3 mb-8 glass-morphism bg-white/5 border border-white/10 p-1 w-full max-w-md mx-auto">
+            <TabsList className="grid grid-cols-2 mb-8 glass-morphism bg-white/5 border border-white/10 p-1 w-full max-w-md mx-auto">
               <TabsTrigger value="guides" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
                 <FileText className="h-4 w-4 mr-2" />
                 Guides
@@ -53,10 +52,6 @@ const DocumentationPage = () => {
               <TabsTrigger value="api" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
                 <Code className="h-4 w-4 mr-2" />
                 API
-              </TabsTrigger>
-              <TabsTrigger value="apikeys" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
-                <Key className="h-4 w-4 mr-2" />
-                API Keys
               </TabsTrigger>
             </TabsList>
             
@@ -143,12 +138,19 @@ const DocumentationPage = () => {
                       <li className="hover:text-primary">• Marketplace Extension</li>
                     </ul>
                   </div>
+                  
+                  <div>
+                    <h4 className="text-lg font-medium mb-2">API Keys</h4>
+                    <p className="text-white/60 mb-3">Required API keys for full platform functionality</p>
+                    <ul className="space-y-2 text-white/60 pl-4">
+                      <li className="hover:text-primary">• Perplexity API</li>
+                      <li className="hover:text-primary">• Solana RPC</li>
+                      <li className="hover:text-primary">• CoinGecko API</li>
+                      <li className="hover:text-primary">• Web3.Storage</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
-            </TabsContent>
-            
-            <TabsContent value="apikeys" className="mt-0">
-              <ApiKeysChecklist />
             </TabsContent>
           </Tabs>
         </div>

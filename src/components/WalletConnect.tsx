@@ -1,6 +1,6 @@
 
-import { useState } from 'react';
-import { Wallet, ChevronDown, Check } from 'lucide-react';
+import { useState, useCallback } from 'react';
+import { Wallet, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -17,17 +17,20 @@ interface WalletConnectProps {
 const WalletConnect = ({ isMobile = false }: WalletConnectProps) => {
   const { user, connectWallet, disconnectWallet } = useAuth();
   const isConnected = !!user?.walletAddress;
+  const [open, setOpen] = useState(false);
   
-  const handleConnectWallet = (type: string) => {
+  const handleConnectWallet = useCallback((type: string) => {
     // This would be replaced with actual wallet connection logic
     console.log(`Connecting to ${type} wallet`);
     const mockAddress = '0x71C7656EC7ab88b098defB751B7401B5f6d8976F';
     connectWallet(mockAddress, type);
-  };
+    setOpen(false);
+  }, [connectWallet]);
   
-  const handleDisconnectWallet = () => {
+  const handleDisconnectWallet = useCallback(() => {
     disconnectWallet();
-  };
+    setOpen(false);
+  }, [disconnectWallet]);
   
   const truncateAddress = (address: string | undefined) => {
     if (!address) return '';
@@ -36,7 +39,7 @@ const WalletConnect = ({ isMobile = false }: WalletConnectProps) => {
   
   if (!isConnected) {
     return (
-      <DropdownMenu>
+      <DropdownMenu open={open} onOpenChange={setOpen}>
         <DropdownMenuTrigger asChild>
           <Button 
             variant="default" 
@@ -81,7 +84,7 @@ const WalletConnect = ({ isMobile = false }: WalletConnectProps) => {
   }
   
   return (
-    <DropdownMenu>
+    <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
         <Button 
           variant="outline" 

@@ -8,8 +8,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Save, Undo, Redo, Eye, Code, Settings, ChevronDown, LayoutGrid } from "lucide-react";
+import { Save, Undo, Redo, Eye, Code, Settings, ChevronDown, LayoutGrid, ArrowLeft } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { Link } from "react-router-dom";
 
 interface EditorToolbarProps {
   onSave: () => void;
@@ -20,6 +21,7 @@ interface EditorToolbarProps {
   canRedo: boolean;
   viewMode: 'visual' | 'code';
   onViewModeChange: (mode: 'visual' | 'code') => void;
+  projectTitle?: string;
 }
 
 const EditorToolbar = ({
@@ -30,7 +32,8 @@ const EditorToolbar = ({
   canUndo,
   canRedo,
   viewMode,
-  onViewModeChange
+  onViewModeChange,
+  projectTitle = "Untitled Project"
 }: EditorToolbarProps) => {
   const { toast } = useToast();
 
@@ -45,6 +48,17 @@ const EditorToolbar = ({
   return (
     <div className="flex items-center justify-between p-2 border-b border-white/10 bg-background/80 backdrop-blur-sm">
       <div className="flex items-center space-x-2">
+        <Link to="/dashboard">
+          <Button 
+            variant="ghost" 
+            size="sm"
+            className="flex items-center mr-4"
+          >
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Dashboard
+          </Button>
+        </Link>
+        
         <Button 
           variant="ghost" 
           size="sm" 
@@ -77,6 +91,8 @@ const EditorToolbar = ({
           Redo
         </Button>
       </div>
+      
+      <div className="text-sm font-medium">{projectTitle}</div>
       
       <div className="flex items-center space-x-2">
         <Button 

@@ -5,9 +5,10 @@ import { useToast } from "@/hooks/use-toast";
 
 interface EditorCanvasProps {
   viewMode: 'visual' | 'code';
+  isPreview?: boolean;
 }
 
-const EditorCanvas = ({ viewMode }: EditorCanvasProps) => {
+const EditorCanvas = ({ viewMode, isPreview = false }: EditorCanvasProps) => {
   const { toast } = useToast();
   const [dropTargets, setDropTargets] = useState<string[]>([]);
 
@@ -39,6 +40,24 @@ const EditorCanvas = ({ viewMode }: EditorCanvasProps) => {
       </Card>
     );
   };
+
+  // In preview mode, we render the components without the editing UI
+  if (isPreview) {
+    return (
+      <div className="w-full">
+        {dropTargets.length === 0 ? (
+          <div className="text-center py-10">
+            <h3 className="text-xl font-medium mb-2">This project is empty</h3>
+            <p className="text-white/60">Add components to see them in preview mode</p>
+          </div>
+        ) : (
+          <div className="space-y-6">
+            {dropTargets.map((componentId, index) => renderComponent(componentId, index))}
+          </div>
+        )}
+      </div>
+    );
+  }
 
   return (
     <div className="flex-1 p-4 overflow-auto">

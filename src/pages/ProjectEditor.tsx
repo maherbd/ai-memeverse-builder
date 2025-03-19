@@ -4,6 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import EditorToolbar from '@/components/editor/EditorToolbar';
 import ComponentLibrary from '@/components/editor/ComponentLibrary';
 import EditorCanvas from '@/components/editor/EditorCanvas';
+import ProjectPreview from '@/components/editor/ProjectPreview';
 import { useToast } from '@/hooks/use-toast';
 
 const ProjectEditor = () => {
@@ -16,31 +17,51 @@ const ProjectEditor = () => {
   const [canUndo, setCanUndo] = useState(false);
   const [canRedo, setCanRedo] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isPreviewMode, setIsPreviewMode] = useState(false);
+  const [projectTitle, setProjectTitle] = useState('Untitled Project');
   
   // Simulating loading project data
   useEffect(() => {
     // Scroll to top on component mount
     window.scrollTo(0, 0);
     
-    // Simulate loading
+    // Simulate loading and fetch project data
     const timer = setTimeout(() => {
       setIsLoading(false);
       setCanUndo(true); // Just for demo
+      
+      // Load project title based on ID (mock data for now)
+      if (id === 'new-project') {
+        setProjectTitle('New Project');
+      } else if (id === 'project-1') {
+        setProjectTitle('Moon Coin');
+      } else if (id === 'project-2') {
+        setProjectTitle('Crypto Startup');
+      }
     }, 1000);
     
     return () => clearTimeout(timer);
-  }, []);
+  }, [id]);
   
   const handleSave = () => {
     // In a real app, this would save to backend
     console.log('Saving project:', id);
+    
+    toast({
+      title: "Project Saved",
+      description: "All changes have been saved successfully.",
+    });
   };
   
   const handlePreview = () => {
-    // Navigate to preview mode
+    // Toggle preview mode
+    setIsPreviewMode(!isPreviewMode);
+    
     toast({
-      title: "Preview Mode",
-      description: "Viewing your site as visitors will see it.",
+      title: isPreviewMode ? "Edit Mode" : "Preview Mode",
+      description: isPreviewMode 
+        ? "Switched back to editor mode." 
+        : "Viewing your site as visitors will see it.",
     });
   };
   
@@ -76,6 +97,15 @@ const ProjectEditor = () => {
     );
   }
   
+  if (isPreviewMode) {
+    return (
+      <ProjectPreview 
+        projectTitle={projectTitle}
+        onExitPreview={handlePreview}
+      />
+    );
+  }
+  
   return (
     <div className="min-h-screen flex flex-col">
       <EditorToolbar 
@@ -87,11 +117,12 @@ const ProjectEditor = () => {
         canRedo={canRedo}
         viewMode={viewMode}
         onViewModeChange={setViewMode}
+        projectTitle={projectTitle}
       />
       
       <div className="flex flex-1 overflow-hidden">
         <ComponentLibrary onDragStart={handleDragStart} />
-        <EditorCanvas viewMode={viewMode} />
+        <EditorCanvas viewMode={viewMode} isPreview={false} />
       </div>
     </div>
   );

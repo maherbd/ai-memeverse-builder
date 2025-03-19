@@ -4,6 +4,17 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ExternalLink, Edit, Trash2, Copy, Eye, BarChart3 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 interface ProjectCardProps {
   id: string;
@@ -17,6 +28,7 @@ interface ProjectCardProps {
 
 const ProjectCard = ({ id, name, description, image, domain, createdAt, onDelete }: ProjectCardProps) => {
   const { toast } = useToast();
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   
   const copyDomain = () => {
     navigator.clipboard.writeText(domain);
@@ -24,6 +36,11 @@ const ProjectCard = ({ id, name, description, image, domain, createdAt, onDelete
       title: "Domain Copied",
       description: "The domain has been copied to your clipboard.",
     });
+  };
+  
+  const handleDeleteConfirm = () => {
+    onDelete(id);
+    setIsDeleteDialogOpen(false);
   };
   
   return (
@@ -101,15 +118,38 @@ const ProjectCard = ({ id, name, description, image, domain, createdAt, onDelete
             </a>
           </Button>
           
-          <Button
-            variant="destructive"
-            size="sm"
-            className="col-span-3 mt-2"
-            onClick={() => onDelete(id)}
-          >
-            <Trash2 size={14} className="mr-1" />
-            Delete
-          </Button>
+          <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+            <AlertDialogTrigger asChild>
+              <Button
+                variant="destructive"
+                size="sm"
+                className="col-span-3 mt-2"
+              >
+                <Trash2 size={14} className="mr-1" />
+                Delete
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent className="glass-morphism border-white/10">
+              <AlertDialogHeader>
+                <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This will permanently delete the "{name}" project and all its data.
+                  This action cannot be undone.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel className="glass-morphism border-white/10 hover:bg-white/5">
+                  Cancel
+                </AlertDialogCancel>
+                <AlertDialogAction 
+                  onClick={handleDeleteConfirm}
+                  className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                >
+                  Delete
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
       </div>
     </div>

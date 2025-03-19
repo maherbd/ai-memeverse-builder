@@ -2,6 +2,8 @@
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
+import { X } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface EditorCanvasProps {
   viewMode: 'visual' | 'code';
@@ -28,13 +30,33 @@ const EditorCanvas = ({ viewMode, isPreview = false }: EditorCanvasProps) => {
     e.preventDefault();
   };
 
+  const handleDeleteComponent = (index: number) => {
+    const newComponents = [...dropTargets];
+    newComponents.splice(index, 1);
+    setDropTargets(newComponents);
+    toast({
+      title: "Component Removed",
+      description: "The component has been removed from the canvas.",
+    });
+  };
+
   const renderComponent = (componentId: string, index: number) => {
     // This is a simplified version, in a real app you'd render actual components
     return (
       <Card 
         key={index}
-        className="p-4 mb-4 border border-white/10 glass-morphism"
+        className="p-4 mb-4 border border-white/10 glass-morphism relative group"
       >
+        {!isPreview && (
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="absolute top-2 right-2 w-6 h-6 opacity-0 group-hover:opacity-100 transition-opacity"
+            onClick={() => handleDeleteComponent(index)}
+          >
+            <X className="w-4 h-4 text-white/70 hover:text-white" />
+          </Button>
+        )}
         <div className="text-sm font-medium">{componentId}</div>
         <div className="text-xs text-muted-foreground">Component placeholder</div>
       </Card>

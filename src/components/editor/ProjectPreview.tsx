@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import EditorCanvas from "./EditorCanvas";
+import { useToast } from "@/hooks/use-toast";
 
 interface ProjectPreviewProps {
   projectTitle: string;
@@ -10,6 +11,17 @@ interface ProjectPreviewProps {
 }
 
 const ProjectPreview = ({ projectTitle, onExitPreview }: ProjectPreviewProps) => {
+  const { toast } = useToast();
+
+  const handleShareProject = () => {
+    // Copy a shareable link to clipboard
+    navigator.clipboard.writeText(`https://app.reham.org/${projectTitle.toLowerCase().replace(/\s+/g, '-')}`);
+    toast({
+      title: "Link Copied",
+      description: "A shareable preview link has been copied to your clipboard.",
+    });
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       <div className="flex items-center justify-between p-2 border-b border-white/10 bg-background/80 backdrop-blur-sm">
@@ -20,7 +32,10 @@ const ProjectPreview = ({ projectTitle, onExitPreview }: ProjectPreviewProps) =>
           </Button>
         </div>
         <div className="text-sm font-medium">{projectTitle} - Preview Mode</div>
-        <div className="flex items-center">
+        <div className="flex items-center gap-2">
+          <Button variant="ghost" size="sm" onClick={handleShareProject}>
+            Share Preview
+          </Button>
           <Link to="/dashboard">
             <Button variant="ghost" size="sm">Exit Preview</Button>
           </Link>

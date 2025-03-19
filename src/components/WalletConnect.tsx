@@ -8,33 +8,33 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { useAuth } from '@/context/AuthContext';
 
 interface WalletConnectProps {
   isMobile?: boolean;
 }
 
 const WalletConnect = ({ isMobile = false }: WalletConnectProps) => {
-  const [connected, setConnected] = useState(false);
-  const [walletAddress, setWalletAddress] = useState('');
+  const { user, connectWallet, disconnectWallet } = useAuth();
+  const isConnected = !!user?.walletAddress;
   
-  const connectWallet = (type: string) => {
+  const handleConnectWallet = (type: string) => {
     // This would be replaced with actual wallet connection logic
     console.log(`Connecting to ${type} wallet`);
-    setWalletAddress('0x71C...f3a2');
-    setConnected(true);
+    const mockAddress = '0x71C7656EC7ab88b098defB751B7401B5f6d8976F';
+    connectWallet(mockAddress, type);
   };
   
-  const disconnectWallet = () => {
-    setConnected(false);
-    setWalletAddress('');
+  const handleDisconnectWallet = () => {
+    disconnectWallet();
   };
   
-  const truncateAddress = (address: string) => {
+  const truncateAddress = (address: string | undefined) => {
     if (!address) return '';
     return `${address.slice(0, 6)}...${address.slice(-4)}`;
   };
   
-  if (!connected) {
+  if (!isConnected) {
     return (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
@@ -51,7 +51,7 @@ const WalletConnect = ({ isMobile = false }: WalletConnectProps) => {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-[200px] glass-morphism border-white/10">
-          <DropdownMenuItem onClick={() => connectWallet('MetaMask')} className="cursor-pointer">
+          <DropdownMenuItem onClick={() => handleConnectWallet('MetaMask')} className="cursor-pointer">
             <img 
               src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg" 
               alt="MetaMask" 
@@ -59,7 +59,7 @@ const WalletConnect = ({ isMobile = false }: WalletConnectProps) => {
             />
             MetaMask
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => connectWallet('Phantom')} className="cursor-pointer">
+          <DropdownMenuItem onClick={() => handleConnectWallet('Phantom')} className="cursor-pointer">
             <img 
               src="https://cryptologos.cc/logos/phantom-phntm-logo.png" 
               alt="Phantom" 
@@ -67,7 +67,7 @@ const WalletConnect = ({ isMobile = false }: WalletConnectProps) => {
             />
             Phantom
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => connectWallet('WalletConnect')} className="cursor-pointer">
+          <DropdownMenuItem onClick={() => handleConnectWallet('WalletConnect')} className="cursor-pointer">
             <img 
               src="https://avatars.githubusercontent.com/u/37784886" 
               alt="WalletConnect" 
@@ -89,13 +89,13 @@ const WalletConnect = ({ isMobile = false }: WalletConnectProps) => {
         >
           <div className="flex items-center">
             <div className="w-2 h-2 rounded-full bg-green-500 mr-2 animate-pulse-slow"></div>
-            {truncateAddress(walletAddress)}
+            {truncateAddress(user?.walletAddress)}
             <ChevronDown size={16} className="ml-2" />
           </div>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[200px] glass-morphism border-white/10">
-        <DropdownMenuItem onClick={disconnectWallet} className="cursor-pointer text-destructive">
+        <DropdownMenuItem onClick={handleDisconnectWallet} className="cursor-pointer text-destructive">
           Disconnect
         </DropdownMenuItem>
       </DropdownMenuContent>

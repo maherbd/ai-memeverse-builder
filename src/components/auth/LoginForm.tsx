@@ -154,7 +154,7 @@ const LoginForm = () => {
               <p className="text-white/70 mb-4">
                 Connect your wallet to sign in securely without a password.
               </p>
-              <WalletConnect buttonText="Connect Wallet to Sign In" fullWidth />
+              <WalletConnect buttonText="Connect Wallet to Sign In" fullWidth={true} />
             </div>
           </TabsContent>
         </Tabs>

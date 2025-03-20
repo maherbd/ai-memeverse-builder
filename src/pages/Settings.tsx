@@ -6,6 +6,8 @@ import { useScrollAnimation } from '@/utils/animation';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ProfileSettings from '@/components/settings/ProfileSettings';
 import SecuritySettings from '@/components/settings/SecuritySettings';
+import NotificationsSettings from '@/components/settings/NotificationsSettings';
+import BillingSettings from '@/components/settings/BillingSettings';
 
 const Settings = () => {
   // Initialize scroll animations
@@ -55,35 +57,11 @@ const Settings = () => {
                   </TabsContent>
                   
                   <TabsContent value="notifications" className="mt-0">
-                    <div className="space-y-6">
-                      <div>
-                        <h2 className="text-2xl font-bold mb-4">Notification Settings</h2>
-                        <p className="text-white/70 mb-6">
-                          Control which notifications you receive and how you receive them.
-                        </p>
-                      </div>
-                      
-                      <div className="text-center py-16">
-                        <h3 className="text-xl font-semibold mb-3">Coming Soon</h3>
-                        <p className="text-white/70">Notification settings will be available in a future update.</p>
-                      </div>
-                    </div>
+                    <NotificationsSettings />
                   </TabsContent>
                   
                   <TabsContent value="billing" className="mt-0">
-                    <div className="space-y-6">
-                      <div>
-                        <h2 className="text-2xl font-bold mb-4">Billing & Subscription</h2>
-                        <p className="text-white/70 mb-6">
-                          Manage your subscription plan and payment methods.
-                        </p>
-                      </div>
-                      
-                      <div className="text-center py-16">
-                        <h3 className="text-xl font-semibold mb-3">Coming Soon</h3>
-                        <p className="text-white/70">Billing settings will be available in a future update.</p>
-                      </div>
-                    </div>
+                    <BillingSettings />
                   </TabsContent>
                 </div>
               </Tabs>

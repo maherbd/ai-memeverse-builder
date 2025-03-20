@@ -12,9 +12,15 @@ import { useAuth } from '@/context/AuthContext';
 
 interface WalletConnectProps {
   isMobile?: boolean;
+  buttonText?: string;
+  fullWidth?: boolean;
 }
 
-const WalletConnect = ({ isMobile = false }: WalletConnectProps) => {
+const WalletConnect = ({ 
+  isMobile = false, 
+  buttonText = "Connect", 
+  fullWidth = false 
+}: WalletConnectProps) => {
   const { user, connectWallet, disconnectWallet } = useAuth();
   const isConnected = !!user?.walletAddress;
   const [open, setOpen] = useState(false);
@@ -43,12 +49,12 @@ const WalletConnect = ({ isMobile = false }: WalletConnectProps) => {
         <DropdownMenuTrigger asChild>
           <Button 
             variant="default" 
-            className={`${isMobile ? 'w-full' : ''} group relative overflow-hidden`}
+            className={`${isMobile || fullWidth ? 'w-full' : ''} group relative overflow-hidden`}
           >
             <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-blue-600 to-indigo-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <span className="relative flex items-center">
               <Wallet size={16} className="mr-2" />
-              Connect
+              {buttonText}
               <ChevronDown size={16} className="ml-2" />
             </span>
           </Button>
@@ -88,7 +94,7 @@ const WalletConnect = ({ isMobile = false }: WalletConnectProps) => {
       <DropdownMenuTrigger asChild>
         <Button 
           variant="outline" 
-          className={`${isMobile ? 'w-full' : ''} glass-morphism border-white/10 hover:bg-white/5`}
+          className={`${isMobile || fullWidth ? 'w-full' : ''} glass-morphism border-white/10 hover:bg-white/5`}
         >
           <div className="flex items-center">
             <div className="w-2 h-2 rounded-full bg-green-500 mr-2 animate-pulse-slow"></div>

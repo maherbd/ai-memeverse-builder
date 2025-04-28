@@ -1,5 +1,5 @@
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { Wallet, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {

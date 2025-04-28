@@ -1,5 +1,6 @@
 
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { useScrollAnimation } from '@/utils/animation';
@@ -8,6 +9,8 @@ import ProfileSettings from '@/components/settings/ProfileSettings';
 import SecuritySettings from '@/components/settings/SecuritySettings';
 import NotificationsSettings from '@/components/settings/NotificationsSettings';
 import BillingSettings from '@/components/settings/BillingSettings';
+import { Button } from '@/components/ui/button';
+import { Wallet } from 'lucide-react';
 
 const Settings = () => {
   // Initialize scroll animations
@@ -27,11 +30,20 @@ const Settings = () => {
       <main className="flex-grow pt-28 pb-16">
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-8 animate-fade-in">
-              <h1 className="text-3xl md:text-4xl font-bold mb-4 text-gradient">Account Settings</h1>
-              <p className="text-white/70 text-lg">
-                Manage your profile, security, and application preferences
-              </p>
+            <div className="flex justify-between items-center mb-8 animate-fade-in">
+              <div>
+                <h1 className="text-3xl md:text-4xl font-bold mb-4 text-gradient">Account Settings</h1>
+                <p className="text-white/70 text-lg">
+                  Manage your profile, security, and application preferences
+                </p>
+              </div>
+              
+              <Link to="/wallet">
+                <Button variant="outline" className="glass-morphism border-white/10 hover:bg-white/5">
+                  <Wallet size={16} className="mr-2" />
+                  Wallet Settings
+                </Button>
+              </Link>
             </div>
             
             <div className="glass-morphism border border-white/10 rounded-lg overflow-hidden animate-fade-in animate-delay-100">

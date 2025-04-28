@@ -1,120 +1,91 @@
 
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card } from '@/components/ui/card';
 import LoginForm from '@/components/auth/LoginForm';
 import RegisterForm from '@/components/auth/RegisterForm';
 import ForgotPasswordForm from '@/components/auth/ForgotPasswordForm';
-import WalletConnect from '@/components/WalletConnect';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
+import { useAuth } from '@/context/AuthContext';
+import { useScrollAnimation } from '@/utils/animation';
 
 const Auth = () => {
+  // Initialize scroll animations
+  useScrollAnimation();
+  
   const [activeTab, setActiveTab] = useState('login');
   const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
   
-  const handleBackToLogin = () => {
-    setShowForgotPassword(false);
-    setActiveTab('login');
-  };
+  // Redirect if user is already authenticated
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/dashboard');
+    }
+  }, [isAuthenticated, navigate]);
+  
+  // Scroll to top on component mount
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   
   return (
-    <div className="min-h-screen flex flex-col">
-      <Navbar />
-      <main className="flex-grow flex items-center justify-center p-4 md:p-8">
-        <div className="w-full max-w-md mx-auto">
-          <Card className="glass-morphism border-white/10 bg-white/5">
-            <CardHeader>
-              <CardTitle className="text-center">
-                {showForgotPassword 
-                  ? 'Forgot Password' 
-                  : activeTab === 'login' 
-                    ? 'Sign In' 
-                    : 'Create Account'}
-              </CardTitle>
-              <CardDescription className="text-center">
-                {showForgotPassword 
-                  ? 'Reset your password to regain access to your account' 
-                  : activeTab === 'login' 
-                    ? 'Sign in to your account to access your projects' 
-                    : 'Create a new account to get started with Reham'}
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              {showForgotPassword ? (
-                <div className="space-y-4">
-                  <ForgotPasswordForm />
-                  <button 
-                    className="text-sm text-primary hover:underline block mx-auto mt-4"
-                    onClick={handleBackToLogin}
-                  >
-                    Back to Login
-                  </button>
-                </div>
-              ) : (
-                <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-                  <TabsList className="grid grid-cols-2 w-full glass-morphism bg-background/50 border border-white/10">
-                    <TabsTrigger value="login" className="data-[state=active]:bg-white/10">
-                      Login
-                    </TabsTrigger>
-                    <TabsTrigger value="register" className="data-[state=active]:bg-white/10">
-                      Register
-                    </TabsTrigger>
-                  </TabsList>
-                  
-                  <TabsContent value="login">
-                    <LoginForm />
-                    <button 
-                      className="text-sm text-primary hover:underline block mx-auto mt-4"
-                      onClick={() => setShowForgotPassword(true)}
-                    >
-                      Forgot your password?
-                    </button>
-                  </TabsContent>
-                  
-                  <TabsContent value="register">
-                    <RegisterForm />
-                  </TabsContent>
-                </Tabs>
-              )}
-              
-              {!showForgotPassword && (
-                <>
-                  <div className="relative my-6">
-                    <div className="absolute inset-0 flex items-center">
-                      <div className="w-full border-t border-white/10"></div>
-                    </div>
-                    <div className="relative flex justify-center text-xs">
-                      <span className="bg-background px-2 text-muted-foreground">
-                        Or continue with
-                      </span>
-                    </div>
-                  </div>
-                  
-                  <WalletConnect isMobile={false} />
-                </>
-              )}
-            </CardContent>
-            <CardFooter className="flex justify-center">
-              {!showForgotPassword && (
-                <p className="text-sm text-muted-foreground">
-                  {activeTab === 'login' 
-                    ? "Don't have an account? " 
-                    : "Already have an account? "}
-                  <button 
-                    className="text-primary hover:underline"
-                    onClick={() => setActiveTab(activeTab === 'login' ? 'register' : 'login')}
-                  >
-                    {activeTab === 'login' ? 'Sign up' : 'Sign in'}
-                  </button>
-                </p>
-              )}
-            </CardFooter>
-          </Card>
+    <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-mesh-gradient">
+      <div className="w-full max-w-md">
+        <div className="text-center mb-6">
+          <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-blue-400">
+            Reham
+          </h1>
+          <p className="text-white/70 mt-2">
+            Web3 Website Builder
+          </p>
         </div>
-      </main>
-      <Footer />
+        
+        {showForgotPassword ? (
+          <Card className="glass-morphism border-white/10 p-6 animate-fade-in">
+            <div className="mb-4">
+              <button 
+                onClick={() => setShowForgotPassword(false)} 
+                className="text-sm text-white/70 hover:text-primary transition-colors"
+              >
+                ← Back to login
+              </button>
+            </div>
+            <h2 className="text-xl font-bold mb-4">Reset Password</h2>
+            <ForgotPasswordForm />
+          </Card>
+        ) : (
+          <Card className="glass-morphism border-white/10 p-6 animate-fade-in">
+            <Tabs 
+              defaultValue={activeTab} 
+              onValueChange={setActiveTab} 
+              className="w-full"
+            >
+              <TabsList className="grid w-full grid-cols-2 mb-6">
+                <TabsTrigger value="login">Login</TabsTrigger>
+                <TabsTrigger value="register">Register</TabsTrigger>
+              </TabsList>
+              
+              <TabsContent value="login" className="space-y-4">
+                <LoginForm onForgotPassword={() => setShowForgotPassword(true)} />
+              </TabsContent>
+              
+              <TabsContent value="register" className="space-y-4">
+                <RegisterForm />
+              </TabsContent>
+            </Tabs>
+          </Card>
+        )}
+        
+        <div className="text-center mt-8 text-sm text-white/50">
+          <div className="flex justify-center space-x-4">
+            <a href="/" className="hover:text-primary transition-colors">Home</a>
+            <a href="/support" className="hover:text-primary transition-colors">Support</a>
+            <a href="/documentation" className="hover:text-primary transition-colors">Docs</a>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

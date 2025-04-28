@@ -1,14 +1,16 @@
 
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import WalletConnect from './WalletConnect';
+import { useAuth } from '@/context/AuthContext';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const { isAuthenticated } = useAuth();
   
   useEffect(() => {
     const handleScroll = () => {
@@ -65,6 +67,14 @@ const Navbar = () => {
         
         <div className="hidden md:flex items-center space-x-4">
           <WalletConnect />
+          {!isAuthenticated && (
+            <Link to="/auth">
+              <Button variant="outline" className="glass-morphism border-white/10 hover:bg-white/5">
+                <User size={16} className="mr-2" />
+                Sign In
+              </Button>
+            </Link>
+          )}
         </div>
         
         {/* Mobile Menu Button */}
@@ -95,6 +105,14 @@ const Navbar = () => {
             <div className="pt-4 border-t border-white/10">
               <WalletConnect isMobile={true} />
             </div>
+            {!isAuthenticated && (
+              <Link to="/auth" className="w-full">
+                <Button variant="outline" className="w-full glass-morphism border-white/10 hover:bg-white/5">
+                  <User size={16} className="mr-2" />
+                  Sign In
+                </Button>
+              </Link>
+            )}
           </div>
         </div>
       )}

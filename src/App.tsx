@@ -19,6 +19,7 @@ import BlogPost from "./pages/BlogPost";
 import Documentation from "./pages/Documentation";
 import Support from "./pages/Support";
 import Settings from "./pages/Settings";
+import WalletSettings from "./pages/WalletSettings";
 import Auth from "./pages/Auth";
 
 const queryClient = new QueryClient();
@@ -44,6 +45,7 @@ const App = () => (
             <Route path="/documentation" element={<Documentation />} />
             <Route path="/support" element={<Support />} />
             <Route path="/settings" element={<Settings />} />
+            <Route path="/wallet" element={<WalletSettings />} />
             <Route path="/auth" element={<Auth />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
